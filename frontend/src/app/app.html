@@ -1,0 +1,58 @@
+<main class="app-shell">
+  <header class="topbar">
+    <div>
+      <p class="eyebrow">Client management</p>
+      <h1>Client Details</h1>
+    </div>
+    <button type="button" class="primary-button">Add Client</button>
+  </header>
+
+  <section class="stats-grid" aria-label="Client summary">
+    <div class="stat-card"><span>Total clients</span><strong>{{ clients().length }}</strong></div>
+    <div class="stat-card"><span>Active</span><strong>{{ activeClientCount }}</strong></div>
+    <div class="stat-card"><span>Pending</span><strong>{{ pendingClientCount }}</strong></div>
+  </section>
+
+  <section class="tools-grid">
+    <div class="tool-card">
+      <div class="tool-heading"><p class="eyebrow">Instant filter</p><h2>Search directory</h2></div>
+      <label for="client-search">Name, email, or phone</label>
+      <input id="client-search" type="search" [ngModel]="searchTerm()" (ngModelChange)="searchTerm.set($event)" placeholder="e.g. alicia or 555-0101" />
+      <p class="tool-hint">Showing {{ filteredClients().length }} of {{ clients().length }} clients</p>
+    </div>
+
+    <div class="tool-card">
+      <div class="tool-heading"><p class="eyebrow">API lookup</p><h2>Find by client ID</h2></div>
+      <form class="lookup-form" (ngSubmit)="handleClientLookup()">
+        <label for="client-id">Client ID</label>
+        <div class="lookup-controls">
+          <input id="client-id" type="number" min="1" [ngModel]="clientId()" (ngModelChange)="updateClientId($event)" name="clientId" placeholder="e.g. 42" />
+          <button type="submit" class="secondary-button" [disabled]="lookupLoading()">{{ lookupLoading() ? 'Searching...' : 'Search' }}</button>
+        </div>
+      </form>
+      @if (lookupError()) { <p class="tool-message error">{{ lookupError() }}</p> }
+      @if (searchedClient(); as client) {
+        <div class="lookup-result"><strong>{{ client.client_name }}</strong><span>{{ client.email }}</span><span>{{ client.phone || 'No phone number' }}</span></div>
+      }
+    </div>
+  </section>
+
+  <section class="table-card">
+    <div class="table-header"><h2>Client directory</h2></div>
+    @if (loading()) {
+      <p class="status-message">Loading client data...</p>
+    } @else if (error()) {
+      <p class="status-message error">{{ error() }}</p>
+    } @else {
+      <table>
+        <thead><tr><th>Name</th><th>Email</th><th>Phone</th><th>Company</th><th>City</th><th>Status</th></tr></thead>
+        <tbody>
+          @for (client of filteredClients(); track client.id) {
+            <tr><td>{{ client.client_name }}</td><td>{{ client.email }}</td><td>{{ client.phone || '-' }}</td><td>{{ client.company || '-' }}</td><td>{{ client.city || '-' }}</td><td><span class="status-pill" [class.active]="client.status === 'active'" [class.pending]="client.status === 'pending'">{{ client.status }}</span></td></tr>
+          }
+        </tbody>
+      </table>
+      @if (!filteredClients().length) { <p class="status-message">No clients match your search.</p> }
+    }
+  </section>
+</main>

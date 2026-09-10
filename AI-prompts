@@ -1,0 +1,3 @@
+Prompt #1:
+Please build search client capability (instant search) by name email and phone number we can use it as a filter to the dashboard. This will be on the fly no api call. 
+and another seach client by entering their id which will call end point http://localhost:8000/clients/{client_id} basically an API look up, it will be useful to demo both features to the user on the same page.
