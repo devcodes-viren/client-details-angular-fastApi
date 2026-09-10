@@ -3,6 +3,7 @@ import { Component, computed, inject, signal } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { Client } from './models/client';
 import { ClientService } from './services/client.service';
+import { ClientStatus } from './constants/app.constants';
 
 @Component({
   selector: 'app-root',
@@ -37,11 +38,11 @@ export class AppComponent {
   }
 
   get activeClientCount(): number {
-    return this.clients().filter((client) => client.status === 'active').length;
+    return this.clients().filter((client) => client.status === ClientStatus.Active).length;
   }
 
   get pendingClientCount(): number {
-    return this.clients().filter((client) => client.status === 'pending').length;
+    return this.clients().filter((client) => client.status === ClientStatus.Pending).length;
   }
 
   updateClientId(clientId: number | string | null): void {
