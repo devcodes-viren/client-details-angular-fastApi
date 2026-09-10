@@ -1,8 +1,8 @@
 import { CommonModule } from '@angular/common';
 import { Component, computed, inject, signal } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { Client } from './client';
-import { ClientService } from './client.service';
+import { Client } from './models/client';
+import { ClientService } from './services/client.service';
 
 @Component({
   selector: 'app-root',
