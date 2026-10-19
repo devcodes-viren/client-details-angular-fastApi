@@ -10,6 +10,11 @@ A full-stack client directory application with an Angular dashboard and a FastAP
 - Display client status, company, city, email, and phone information
 - Automatically create and seed a local SQLite database for development
 - Optional SQL Server configuration for deployments that require it
+- Signal form elements are wired to DOM.
+  Once bound, they behave exactly like:
+    FormControl.valueChanges
+    BehaviorSubject.next()
+    NgRx store.select(...)
 
 ## Tech Stack
 
