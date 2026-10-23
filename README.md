@@ -23,7 +23,7 @@ A full-stack client directory application with an Angular dashboard and a FastAP
 - Angular 20
 - TypeScript
 - Angular CLI
-- Angular signals for component state and computed client filtering
+- Angular 20 change detection and signals-first
 - CSS3
 
 ### Backend
